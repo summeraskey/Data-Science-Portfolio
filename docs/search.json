@@ -1,5 +1,70 @@
 [
   {
+    "objectID": "about.html#background",
+    "href": "about.html#background",
+    "title": "About Me",
+    "section": "Background",
+    "text": "Background\nHey! I’m Summer Askey, an applied statistics and analytics student at Brigham Young University with a strong passion for using data to uncover insights, solve problems, and drive meaningful impact. My academic background have given me hands-on experience with statistical inference, regression modeling, data visualization, and tools like R, Python, and Tableau.\nProfessionally, I bring proven leadership and client management skills. My experience in the client management and hospitality industry has strengthened my ability to communicate complex ideas clearly, build strong relationships, and create solutions tailored to diverse business needs.\nI thrive at the intersection of data and people. My career interests include analysis, applied biostatistics, and data-driven strategy, and I’m always eager to learn, grow, and contribute in ways that make a measurable difference. I want to be part of a team that values creativity, excellence, and purpose.\nBeyond academic and professional skills, I am passionate about education, health, and family. I believe that human connection is our greatest offering to society."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About Me",
+    "section": "Education",
+    "text": "Education\n\nStatistics: Applied Statistics and Analytics - Brigham Young University, April 2026\nRelevant Coursework: Statistical Modeling, Data Analysis, R Programming, Data Visualization, Predictive Modeling, Analysis of Correlated Data, Bayesian Statistics, Data Science Ecosystems, Biostatistics."
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About Me",
+    "section": "Experience",
+    "text": "Experience\n\nClient Success Manager: O.C. Tanner - Managed day to day operations for 5 clients with $1-5million budgets, lead bi-annual strategic reviews, collaborated across cross-functional teams to support business strategy and goals.\nLead Server: La Jolla Groves - coordinated and managed events for 30-165 guests, lead team of 10-15 members, restructured new-hire training modules and protocols.\nStatistics Teaching Assistant: Supported student learning by providing one-on-one and group tutoring, improving comprehension, and, exam preparation, applied statistical methods (probability, hypothesis testing, ANOVA, regression) to create examples, practice problems, and solutions for 600+ students.\nAdmissions Office Specialist: Prepared 11,000 undergraduate applications, reviewed 100+ college transcripts daily to apply transfer credits to application process, supported applicant inquiries to remedy application process concerns."
+  },
+  {
+    "objectID": "about.html#skills-interests",
+    "href": "about.html#skills-interests",
+    "title": "About Me",
+    "section": "Skills & Interests",
+    "text": "Skills & Interests\n\nTechnical Skills\n\nProgramming: R, Python\nData Analysis: Pandas, NumPy\nVisualization: Matplotlib, ggplot2\nTools: Jupyter Notebooks, Git/GitHub, Tableau\nSystems: Microsoft Office, Microsoft Dynamics CRM, SAP\n\n\n\nAreas of Interest\n\nI find fulfillment in healthcare anaylytics, epidemiology, childhood development research.\n\n\n\nGet to Know Me\n\n\n\n\n\n\nBeyond professional and academic prusuits, you can find me at pilates, Barnes&Noble, and snuggling with my cat. My highschool sweetheart and I find joy in trying new restaurants, going to the movie theatre, and traveling to new places."
+  },
+  {
+    "objectID": "about.html#contact",
+    "href": "about.html#contact",
+    "title": "About Me",
+    "section": "Contact",
+    "text": "Contact\n\nEmail: summeraskey@gmail.com\nGitHub: github.com/summeraskey\nLinkedIn: linkedin.com/in/summer-askey\n\n\nThis portfolio showcases my learning progress and projects completed during my data science studies."
+  },
+  {
+    "objectID": "projects/final-project.html",
+    "href": "projects/final-project.html",
+    "title": "Final Project",
+    "section": "",
+    "text": "This is coming down the pipeline. Check again later.",
+    "crumbs": [
+      "Final Project"
+    ]
+  },
+  {
+    "objectID": "projects/data-acquisition.html",
+    "href": "projects/data-acquisition.html",
+    "title": "Data Acquisition Project",
+    "section": "",
+    "text": "This is coming down the pipeline. Check again later.",
+    "crumbs": [
+      "Data Acquisition Project"
+    ]
+  },
+  {
+    "objectID": "projects/eda.html",
+    "href": "projects/eda.html",
+    "title": "EDA Project",
+    "section": "",
+    "text": "This is coming down the pipeline. Check again later.",
+    "crumbs": [
+      "EDA Project"
+    ]
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Welcome to My Data Science Portfolio",
@@ -26,97 +91,5 @@
     "title": "Welcome to My Data Science Portfolio",
     "section": "",
     "text": "Learn how I explore datasets to find interesting patterns and answer questions.\n\n\n\nSee how I gather data from different sources and prepare it for analysis.\n\n\n\nSee how I tackle a data science project beginning to end.\n\n\n\nThanks for visiting! Feel free to explore my projects and see what I’m learning."
-  },
-  {
-    "objectID": "projects/index.html",
-    "href": "projects/index.html",
-    "title": "Projects Overview",
-    "section": "",
-    "text": "Description: Pick a dataset and explore it to discover insights and answer questions.\n\n\n\nDescription: Find an interesting data source, collect the data, and prepare it for analysis.\n\n\n\nDescription: A comprehensive project that shows off my data science skills.",
-    "crumbs": [
-      "Projects Overview"
-    ]
-  },
-  {
-    "objectID": "projects/index.html#all-projects",
-    "href": "projects/index.html#all-projects",
-    "title": "Projects Overview",
-    "section": "",
-    "text": "Description: Pick a dataset and explore it to discover insights and answer questions.\n\n\n\nDescription: Find an interesting data source, collect the data, and prepare it for analysis.\n\n\n\nDescription: A comprehensive project that shows off my data science skills.",
-    "crumbs": [
-      "Projects Overview"
-    ]
-  },
-  {
-    "objectID": "projects/eda.html",
-    "href": "projects/eda.html",
-    "title": "EDA Project",
-    "section": "",
-    "text": "This is coming down the pipeline. Check again later.",
-    "crumbs": [
-      "EDA Project"
-    ]
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About Me",
-    "section": "",
-    "text": "Write a brief introduction about yourself here. Include:\n\nYour academic background\nYour interest in data science\nYour career goals\nAny relevant experience or projects"
-  },
-  {
-    "objectID": "about.html#background",
-    "href": "about.html#background",
-    "title": "About Me",
-    "section": "",
-    "text": "Write a brief introduction about yourself here. Include:\n\nYour academic background\nYour interest in data science\nYour career goals\nAny relevant experience or projects"
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "About Me",
-    "section": "Education",
-    "text": "Education\n\n[Your Degree] - [University Name], [Year]\nRelevant Coursework: Statistics, Data Analysis, Programming, etc."
-  },
-  {
-    "objectID": "about.html#skills-interests",
-    "href": "about.html#skills-interests",
-    "title": "About Me",
-    "section": "Skills & Interests",
-    "text": "Skills & Interests\n\nTechnical Skills\n\nProgramming: Python\nData Analysis: Pandas, NumPy\nVisualization: Matplotlib, Seaborn\nMachine Learning: Scikit-learn\nTools: Jupyter Notebooks, Git/GitHub\n\n\n\nAreas of Interest\n\n[Your specific interests, e.g., environmental data, healthcare analytics, finance, etc.]\n[Other areas you’re curious about]"
-  },
-  {
-    "objectID": "about.html#goals",
-    "href": "about.html#goals",
-    "title": "About Me",
-    "section": "Goals",
-    "text": "Goals\nDescribe what you hope to achieve through your data science journey:\n\nShort-term learning objectives\nLong-term career aspirations\nTypes of problems you want to solve"
-  },
-  {
-    "objectID": "about.html#contact",
-    "href": "about.html#contact",
-    "title": "About Me",
-    "section": "Contact",
-    "text": "Contact\n\nEmail: your.email@example.com\nGitHub: github.com/your-username\nLinkedIn: linkedin.com/in/your-profile\n\n\nThis portfolio showcases my learning progress and projects completed during my data science studies."
-  },
-  {
-    "objectID": "projects/data-acquisition.html",
-    "href": "projects/data-acquisition.html",
-    "title": "Data Acquisition Project",
-    "section": "",
-    "text": "This is coming down the pipeline. Check again later.",
-    "crumbs": [
-      "Data Acquisition Project"
-    ]
-  },
-  {
-    "objectID": "projects/final-project.html",
-    "href": "projects/final-project.html",
-    "title": "Final Project",
-    "section": "",
-    "text": "This is coming down the pipeline. Check again later.",
-    "crumbs": [
-      "Final Project"
-    ]
   }
 ]
