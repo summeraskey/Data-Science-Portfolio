@@ -45,6 +45,86 @@
     ]
   },
   {
+    "objectID": "projects/tutorial_blog.html",
+    "href": "projects/tutorial_blog.html",
+    "title": "Meet Polars: Pandas’ Faster, Stricter Cousin",
+    "section": "",
+    "text": "If you’ve spent any time doing data analysis in Python, you’ve used pandas. It’s flexible, well-documented, and has a massive ecosystem behind it. But if you’ve ever tried to wrangle a dataset with a few million rows, you’ve probably also experienced that uncomfortable pause while you wait for a groupby to finish.\nIntroducing Polars: a modern DataFrame library built for speed. It’s written in Rust, a high-performance langauge focused on speed and efficiency. The result? Processes that can be 5–10x faster than pandas on larger datasets.\nIn this tutorial, you’ll learn:\n\nWhat makes Polars different from pandas under the hood\nHow to translate your most common pandas operations into Polars\nHow the two libraries compare in a real benchmark\n\nBy the end, you should feel comfortable trying Polars on your own data!",
+    "crumbs": [
+      "Meet Polars: Pandas' Faster, Stricter Cousin"
+    ]
+  },
+  {
+    "objectID": "projects/tutorial_blog.html#the-problem-with-pandas-sort-of",
+    "href": "projects/tutorial_blog.html#the-problem-with-pandas-sort-of",
+    "title": "Meet Polars: Pandas’ Faster, Stricter Cousin",
+    "section": "",
+    "text": "If you’ve spent any time doing data analysis in Python, you’ve used pandas. It’s flexible, well-documented, and has a massive ecosystem behind it. But if you’ve ever tried to wrangle a dataset with a few million rows, you’ve probably also experienced that uncomfortable pause while you wait for a groupby to finish.\nIntroducing Polars: a modern DataFrame library built for speed. It’s written in Rust, a high-performance langauge focused on speed and efficiency. The result? Processes that can be 5–10x faster than pandas on larger datasets.\nIn this tutorial, you’ll learn:\n\nWhat makes Polars different from pandas under the hood\nHow to translate your most common pandas operations into Polars\nHow the two libraries compare in a real benchmark\n\nBy the end, you should feel comfortable trying Polars on your own data!",
+    "crumbs": [
+      "Meet Polars: Pandas' Faster, Stricter Cousin"
+    ]
+  },
+  {
+    "objectID": "projects/tutorial_blog.html#installation-and-setup",
+    "href": "projects/tutorial_blog.html#installation-and-setup",
+    "title": "Meet Polars: Pandas’ Faster, Stricter Cousin",
+    "section": "Installation and Setup",
+    "text": "Installation and Setup\nGetting started is straightforward. Install both libraries if you don’t have them already:\npip install polars pandas pyarrow\nThen import them into your script:\nimport pandas as pd\nimport polars as pl\nYou’re ready to go!",
+    "crumbs": [
+      "Meet Polars: Pandas' Faster, Stricter Cousin"
+    ]
+  },
+  {
+    "objectID": "projects/tutorial_blog.html#what-makes-polars-fast",
+    "href": "projects/tutorial_blog.html#what-makes-polars-fast",
+    "title": "Meet Polars: Pandas’ Faster, Stricter Cousin",
+    "section": "What Makes Polars Fast?",
+    "text": "What Makes Polars Fast?\nYou don’t need to understand Rust to use Polars, but a quick background helps. Three things make it fast:\n\nBuilt on Apache Arrow — data is stored in a columnar format that is highly memory-efficient and cache-friendly.\nParallel execution — Polars automatically uses multiple CPU cores when processing data.\nLazy evaluation — when you chain operations, Polars builds a query plan and optimizes it before running anything. Computations will not immediately run once defined, rather they are executed when you call.\n\nPandas, by contrast, executes operations immediately and single-threaded by default, which means it does exactly what you input, exactly when you ask it, with no optimization. Although valuable for smaller datasets, this can slow down workflow as your datasets egt larger.",
+    "crumbs": [
+      "Meet Polars: Pandas' Faster, Stricter Cousin"
+    ]
+  },
+  {
+    "objectID": "projects/tutorial_blog.html#side-by-side-syntax-comparison",
+    "href": "projects/tutorial_blog.html#side-by-side-syntax-comparison",
+    "title": "Meet Polars: Pandas’ Faster, Stricter Cousin",
+    "section": "Side-by-Side Syntax Comparison",
+    "text": "Side-by-Side Syntax Comparison\nLet’s look at four everyday operations. We’ll use the classic Titanic dataset for all examples.\n# Load data\ndf_pd = pd.read_csv(\"titanic.csv\")\ndf_pl = pl.read_csv(\"titanic.csv\")\n\n1. Filtering Rows\nPandas:\ndf_pd[df_pd[\"Age\"] &gt; 30]\nPolars:\ndf_pl.filter(pl.col(\"Age\") &gt; 30)\nPolars uses explicit pl.col() references, which makes it easier to read in complex expressions.\n\n\n\n2. Selecting and Renaming Columns\nPandas:\ndf_pd[[\"Name\", \"Age\", \"Fare\"]].rename(columns={\"Fare\": \"ticket_price\"})\nPolars:\ndf_pl.select([\n    pl.col(\"Name\"),\n    pl.col(\"Age\"),\n    pl.col(\"Fare\").alias(\"ticket_price\")\n])\nThe .alias() pattern in Polars keeps selection and renaming in one place, which reduces the chance of forgetting a step.\n\n\n\n3. GroupBy + Aggregation\nPandas:\ndf_pd.groupby(\"Pclass\")[\"Fare\"].mean().reset_index()\nPolars:\ndf_pl.group_by(\"Pclass\").agg(\n    pl.col(\"Fare\").mean().alias(\"avg_fare\")\n)\nBoth are readable, but Polars’ .agg() approach scales more naturally when you’re aggregating multiple columns at once.\n\n\n\n4. Adding a Computed Column\nPandas:\ndf_pd[\"fare_per_age\"] = df_pd[\"Fare\"] / df_pd[\"Age\"]\nPolars:\ndf_pl = df_pl.with_columns(\n    (pl.col(\"Fare\") / pl.col(\"Age\")).alias(\"fare_per_age\")\n)",
+    "crumbs": [
+      "Meet Polars: Pandas' Faster, Stricter Cousin"
+    ]
+  },
+  {
+    "objectID": "projects/tutorial_blog.html#how-much-faster-is-it-really",
+    "href": "projects/tutorial_blog.html#how-much-faster-is-it-really",
+    "title": "Meet Polars: Pandas’ Faster, Stricter Cousin",
+    "section": "How Much Faster Is It Really?",
+    "text": "How Much Faster Is It Really?\nTo get a fair comparison, let’s generate a large dataset and time the same groupby operation in both libraries.\nimport numpy as np\nimport time\n\n# Generate 2 million rows\nn = 2_000_000\ndata = {\n    \"group\": np.random.choice([\"A\", \"B\", \"C\", \"D\"], size=n),\n    \"value\": np.random.randn(n),\n}\n\ndf_pd = pd.DataFrame(data)\ndf_pl = pl.DataFrame(data)\n\n# Pandas benchmark\nstart = time.time()\ndf_pd.groupby(\"group\")[\"value\"].mean()\npd_time = time.time() - start\n\n# Polars benchmark\nstart = time.time()\ndf_pl.group_by(\"group\").agg(pl.col(\"value\").mean())\npl_time = time.time() - start\n\nprint(f\"Pandas:  {pd_time:.4f}s\")\nprint(f\"Polars:  {pl_time:.4f}s\")\nprint(f\"Speedup: {pd_time / pl_time:.1f}x\")\nOn a typical laptop, you might see output like:\nPandas:  0.1823s\nPolars:  0.0241s\nSpeedup: 7.6x\nYour exact numbers will vary, but the gap is real and gets larger as your dataset grows.",
+    "crumbs": [
+      "Meet Polars: Pandas' Faster, Stricter Cousin"
+    ]
+  },
+  {
+    "objectID": "projects/tutorial_blog.html#when-should-you-use-each",
+    "href": "projects/tutorial_blog.html#when-should-you-use-each",
+    "title": "Meet Polars: Pandas’ Faster, Stricter Cousin",
+    "section": "When Should You Use Each?",
+    "text": "When Should You Use Each?\n\n\n\n\n\n\n\n\nFactor\nPandas\nPolars\n\n\n\n\nDataset size\nSmall to medium (&lt;1M rows)\nMedium to large (1M+ rows)\n\n\nSpeed\nSlower, single-threaded\nFaster, multi-threaded\n\n\nSyntax learning curve\nFamiliar, widely taught\nSlightly different, very consistent\n\n\nEcosystem (sklearn, etc.)\nSmooth integration\nGrowing, some friction\n\n\nIn-place mutation\nSupported\nNot supported (immutable)\n\n\nLazy evaluation\nNo\nYes (via lazy())\n\n\n\nMy preference: I like to use pandas when working with smaller datasets. Yet, will reach for Polars when my data is large, the pipeline is complex, or I want cleaner, more expressive code. However, I’ll keep both in my toolkit at all times.",
+    "crumbs": [
+      "Meet Polars: Pandas' Faster, Stricter Cousin"
+    ]
+  },
+  {
+    "objectID": "projects/tutorial_blog.html#conclusion-and-next-steps",
+    "href": "projects/tutorial_blog.html#conclusion-and-next-steps",
+    "title": "Meet Polars: Pandas’ Faster, Stricter Cousin",
+    "section": "Conclusion and Next Steps",
+    "text": "Conclusion and Next Steps\nThe goal for Polars is not to replace pandas, rather enhance it. Once you get comfortable with its syntax, you may find yourself reaching for it more often than you expect.\nHere’s what to do next:\n\nTry it on your own data. Take a pandas script you’ve already written and port one section to Polars. See how the syntax feels.\nExplore lazy evaluation. Run df_pl.lazy().filter(...).collect() and check out the query plan with .explain(). That way you can see how polars is optimizing under the hood.\nCheck the official docs. The Polars user guide has been my reference in learning Polars alongside specific examples.\n\nThe best way to learn a new library is to use it on a problem you actually care about. Happy coding!",
+    "crumbs": [
+      "Meet Polars: Pandas' Faster, Stricter Cousin"
+    ]
+  },
+  {
     "objectID": "projects/data-acquisition.html",
     "href": "projects/data-acquisition.html",
     "title": "Data Acquisition Project",
@@ -69,7 +149,7 @@
     "href": "index.html",
     "title": "Welcome to My Data Science Portfolio",
     "section": "",
-    "text": "Welcome to my data science portfolio! This site shows my journey learning data science and analytics. Here you’ll find projects that demonstrate what I’ve learned and discovered.\n\n\nThis portfolio shows my work learning data science. Each project includes:\n\nMy code with documentation\nVisualizations I created\nWhat I learned and discovered\n\nI built this site using Quarto and host it on GitHub Pages.\n\n\n\n\nProgramming: Python, Pandas for data analysis\nVisualization: Creating charts with Matplotlib and Seaborn\nData Collection: Getting data from files, websites, and APIs\nAnalysis: Finding patterns and answering questions with data\n\n\n\n\n\n\n\nLearn how I explore datasets to find interesting patterns and answer questions.\n\n\n\nSee how I gather data from different sources and prepare it for analysis.\n\n\n\nSee how I tackle a data science project beginning to end.\n\n\n\nThanks for visiting! Feel free to explore my projects and see what I’m learning."
+    "text": "Welcome to my data science portfolio! This site shows my journey learning data science and analytics. Here you’ll find projects that demonstrate what I’ve learned and discovered.\n\n\nThis portfolio shows my work learning data science. Each project includes:\n\nMy code with documentation\nVisualizations I created\nWhat I learned and discovered\n\nI built this site using Quarto and host it on GitHub Pages.\n\n\n\n\nProgramming: Python, Pandas for data analysis\nVisualization: Creating charts with Matplotlib and Seaborn\nData Collection: Getting data from files, websites, and APIs\nAnalysis: Finding patterns and answering questions with data\n\n\n\n\n\n\n\nLearn how I explore datasets to find interesting patterns and answer questions.\n\n\n\nSee how I gather data from different sources and prepare it for analysis.\n\n\n\nSee how I tackle a data science project beginning to end.\n\n\n\n\nLearn how I dive into the different features of pandas and polars.\n\n\nThanks for visiting! Feel free to explore my projects and see what I’m learning."
   },
   {
     "objectID": "index.html#about-this-portfolio",
@@ -90,6 +170,6 @@
     "href": "index.html#my-projects",
     "title": "Welcome to My Data Science Portfolio",
     "section": "",
-    "text": "Learn how I explore datasets to find interesting patterns and answer questions.\n\n\n\nSee how I gather data from different sources and prepare it for analysis.\n\n\n\nSee how I tackle a data science project beginning to end.\n\n\n\nThanks for visiting! Feel free to explore my projects and see what I’m learning."
+    "text": "Learn how I explore datasets to find interesting patterns and answer questions.\n\n\n\nSee how I gather data from different sources and prepare it for analysis.\n\n\n\nSee how I tackle a data science project beginning to end.\n\n\n\n\nLearn how I dive into the different features of pandas and polars.\n\n\nThanks for visiting! Feel free to explore my projects and see what I’m learning."
   }
 ]
