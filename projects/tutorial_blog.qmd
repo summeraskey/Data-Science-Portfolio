@@ -1,0 +1,209 @@
+---
+title: "Meet Polars: Pandas' Faster, Stricter Cousin"
+author: "Summer Askey"
+date: "2026-02-20"
+format:
+  html:
+    code-fold: true
+    toc: true
+description: "A practical introduction to Polars for data scientists who are comfortable with pandas but want faster, more expressive code."
+---
+
+## The Problem with Pandas (Sort Of)
+
+If you've spent any time doing data analysis in Python, you've used **pandas**. It's flexible, well-documented, and has a massive ecosystem behind it. But if you've ever tried to wrangle a dataset with a few million rows, you've probably also experienced that uncomfortable pause while you wait for a `groupby` to finish.
+
+Introducing **Polars**: a modern DataFrame library built for speed. It's written in Rust, a high-performance langauge focused on speed and efficiency. The result? Processes that can be **5–10x faster** than pandas on larger datasets.
+
+In this tutorial, you'll learn:
+
+- What makes Polars different from pandas under the hood
+- How to translate your most common pandas operations into Polars
+- How the two libraries compare in a real benchmark
+
+By the end, you should feel comfortable trying Polars on your own data! 
+
+---
+
+## Installation and Setup
+
+Getting started is straightforward. Install both libraries if you don't have them already:
+
+```bash
+pip install polars pandas pyarrow
+```
+
+Then import them into your script:
+
+```python
+import pandas as pd
+import polars as pl
+```
+
+You're ready to go! 
+
+---
+
+## What Makes Polars Fast?
+
+You don't need to understand Rust to use Polars, but a quick background helps. Three things make it fast:
+
+1. **Built on Apache Arrow** — data is stored in a columnar format that is highly memory-efficient and cache-friendly.
+2. **Parallel execution** — Polars automatically uses multiple CPU cores when processing data.
+3. **Lazy evaluation** — when you chain operations, Polars builds a query plan and optimizes it before running anything. Computations will not immediately run once defined, rather they are executed when you call. 
+
+Pandas, by contrast, executes operations immediately and single-threaded by default, which means it does exactly what you input, exactly when you ask it, with no optimization. Although valuable for smaller datasets, this can slow down workflow as your datasets egt larger. 
+
+---
+
+## Side-by-Side Syntax Comparison
+
+Let's look at four everyday operations. We'll use the classic **Titanic dataset** for all examples.
+
+```python
+# Load data
+df_pd = pd.read_csv("titanic.csv")
+df_pl = pl.read_csv("titanic.csv")
+```
+
+### 1. Filtering Rows
+
+**Pandas:**
+```python
+df_pd[df_pd["Age"] > 30]
+```
+
+**Polars:**
+```python
+df_pl.filter(pl.col("Age") > 30)
+```
+
+Polars uses explicit `pl.col()` references, which makes it easier to read in complex expressions. 
+
+---
+
+### 2. Selecting and Renaming Columns
+
+**Pandas:**
+```python
+df_pd[["Name", "Age", "Fare"]].rename(columns={"Fare": "ticket_price"})
+```
+
+**Polars:**
+```python
+df_pl.select([
+    pl.col("Name"),
+    pl.col("Age"),
+    pl.col("Fare").alias("ticket_price")
+])
+```
+
+The `.alias()` pattern in Polars keeps selection and renaming in one place, which reduces the chance of forgetting a step.
+
+---
+
+### 3. GroupBy + Aggregation
+
+**Pandas:**
+```python
+df_pd.groupby("Pclass")["Fare"].mean().reset_index()
+```
+
+**Polars:**
+```python
+df_pl.group_by("Pclass").agg(
+    pl.col("Fare").mean().alias("avg_fare")
+)
+```
+
+Both are readable, but Polars' `.agg()` approach scales more naturally when you're aggregating multiple columns at once.
+
+---
+
+### 4. Adding a Computed Column
+
+**Pandas:**
+```python
+df_pd["fare_per_age"] = df_pd["Fare"] / df_pd["Age"]
+```
+
+**Polars:**
+```python
+df_pl = df_pl.with_columns(
+    (pl.col("Fare") / pl.col("Age")).alias("fare_per_age")
+)
+```
+
+---
+
+## How Much Faster Is It Really?
+
+To get a fair comparison, let's generate a large dataset and time the same groupby operation in both libraries.
+
+```python
+import numpy as np
+import time
+
+# Generate 2 million rows
+n = 2_000_000
+data = {
+    "group": np.random.choice(["A", "B", "C", "D"], size=n),
+    "value": np.random.randn(n),
+}
+
+df_pd = pd.DataFrame(data)
+df_pl = pl.DataFrame(data)
+
+# Pandas benchmark
+start = time.time()
+df_pd.groupby("group")["value"].mean()
+pd_time = time.time() - start
+
+# Polars benchmark
+start = time.time()
+df_pl.group_by("group").agg(pl.col("value").mean())
+pl_time = time.time() - start
+
+print(f"Pandas:  {pd_time:.4f}s")
+print(f"Polars:  {pl_time:.4f}s")
+print(f"Speedup: {pd_time / pl_time:.1f}x")
+```
+
+On a typical laptop, you might see output like:
+
+```
+Pandas:  0.1823s
+Polars:  0.0241s
+Speedup: 7.6x
+```
+
+Your exact numbers will vary, but the gap is real and gets larger as your dataset grows.
+
+---
+
+## When Should You Use Each?
+
+| Factor | Pandas | Polars |
+|---|---|---|
+| Dataset size | Small to medium (<1M rows) | Medium to large (1M+ rows) |
+| Speed | Slower, single-threaded | Faster, multi-threaded |
+| Syntax learning curve | Familiar, widely taught | Slightly different, very consistent |
+| Ecosystem (sklearn, etc.) | Smooth integration | Growing, some friction |
+| In-place mutation | Supported | Not supported (immutable) |
+| Lazy evaluation | No | Yes (via `lazy()`) |
+
+My preference: I like to **use pandas when working with smaller datasets**. Yet, will reach for Polars when my data is large, the pipeline is complex, or I want cleaner, more expressive code. However, I'll keep both in my toolkit at all times. 
+
+---
+
+## Conclusion and Next Steps
+
+The goal for Polars is not to replace pandas, rather enhance it. Once you get comfortable with its syntax, you may find yourself reaching for it more often than you expect. 
+
+Here's what to do next:
+
+- **Try it on your own data.** Take a pandas script you've already written and port one section to Polars. See how the syntax feels.
+- **Explore lazy evaluation.** Run `df_pl.lazy().filter(...).collect()` and check out the query plan with `.explain()`. That way you can see how polars is optimizing under the hood. 
+- **Check the official docs.** The [Polars user guide](https://docs.pola.rs/) has been my reference in learning Polars alongside specific examples.
+
+The best way to learn a new library is to use it on a problem you actually care about. Happy coding!

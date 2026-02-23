@@ -44,6 +44,12 @@ See how I tackle a data science project beginning to end.
 
 :::
 
+::: {.g-col-6}
+### [Tutorial Blog](projects/tutorial_blog.qmd)
+Learn how I dive into the different features of pandas and polars.
+:::
+
+
 ---
 
 *Thanks for visiting! Feel free to explore my projects and see what I'm learning.*
